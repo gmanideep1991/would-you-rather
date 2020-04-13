@@ -1,47 +1,100 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { Link } from "react-router-dom";
+import { setAuthedUser } from "../actions/authedUser";
+import { connect } from "react-redux";
+import { Button } from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
+import Chip from "@material-ui/core/Chip";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
-function LinkTab(props) {
-  return <Tab component={Link} {...props} />;
-}
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = (theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
   },
-}));
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  userprofile: {
+    textAlign: "right",
+  },
+  button: {
+    margin: theme.spacing(1),
+  },
+});
 
-export default function NavTabs() {
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+class NavTabs extends Component {
+  state = {
+    value: 0,
   };
 
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Tabs
-          variant="standard"
-          value={value}
-          onChange={handleChange}
-          aria-label="nav tabs"
-        >
-          <LinkTab label="Home" to="/" />
-          <LinkTab label="New Question" to="/add" />
-          <LinkTab label="Leaderboard" to="/leaderboard" />
-          <div>
-            <LinkTab label="Logout" to="/" />
-          </div>
-        </Tabs>
-        <div></div>
-      </AppBar>
-    </div>
-  );
+  handleChange = (event, newValue) => {
+    this.setState({
+      value: newValue,
+    });
+  };
+  handleLogout = () => {
+    this.props.dispatch(setAuthedUser(null));
+  };
+
+  render() {
+    return (
+      <div className={this.props.classes.root}>
+        <AppBar position="static">
+          <Grid container alignItems="center">
+            <Grid item xs={6}>
+              <Tabs
+                variant="standard"
+                value={this.state.value}
+                onChange={this.handleChange}
+                aria-label="nav tabs"
+                centered
+              >
+                <Tab component={Link} label="Home" to="/" />
+                <Tab component={Link} label="New Question" to="/add" />
+                <Tab component={Link} label="Leaderboard" to="/leaderboard" />
+              </Tabs>
+            </Grid>
+            <Grid item xs={6} className={this.props.classes.userprofile}>
+              <Chip
+                avatar={
+                  <Avatar
+                    alt={this.props.user.name}
+                    src={this.props.user.avatarURL}
+                  ></Avatar>
+                }
+                label={this.props.user.name}
+              />
+              <Button
+                component={Link}
+                variant="contained"
+                color="secondary"
+                className={this.props.classes.button}
+                endIcon={<ExitToAppIcon />}
+                onClick={this.handleLogout}
+                to="/"
+              >
+                Logout
+              </Button>
+            </Grid>
+          </Grid>
+        </AppBar>
+      </div>
+    );
+  }
 }
+
+function mapStateToProps({ authedUser, users }) {
+  return {
+    user: users[authedUser],
+  };
+}
+export default connect(mapStateToProps)(
+  withStyles(useStyles, { withTheme: true })(NavTabs)
+);

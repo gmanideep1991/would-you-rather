@@ -4,6 +4,9 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import { setAuthedUser } from "../actions/authedUser";
+import { Link } from "react-router-dom";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -17,29 +20,34 @@ const useStyles = (theme) => ({
 
 class Login extends Component {
   state = {
-    userId: null,
+    userId: "",
   };
   handleChange = (e) => {
     this.setState({
       userId: e.target.value,
     });
   };
+  handleSubmit = () => {
+    this.props.dispatch(setAuthedUser(this.state.userId));
+  };
   render() {
+    console.log(this.props);
     return (
       <div>
         <FormControl
           variant="outlined"
           className={this.props.classes.formControl}
         >
-          <InputLabel htmlFor="outlined-age-native-simple">user</InputLabel>
+          <InputLabel htmlFor="outlined-user-native-simple">user</InputLabel>
+
           <Select
             native
             value={this.state.userId}
             onChange={this.handleChange}
-            label="Age"
+            label="User"
             inputProps={{
-              name: "age",
-              id: "outlined-age-native-simple",
+              name: "user",
+              id: "outlined-user-native-simple",
             }}
           >
             <option hidden value="default">
@@ -51,6 +59,17 @@ class Login extends Component {
               </option>
             ))}
           </Select>
+          <Button
+            component={Link}
+            variant="contained"
+            color="primary"
+            onClick={this.handleSubmit}
+            to={
+              this.props.location === undefined ? "/" : this.props.location.from
+            }
+          >
+            Submit
+          </Button>
         </FormControl>
       </div>
     );
