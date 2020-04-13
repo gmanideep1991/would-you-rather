@@ -41,15 +41,28 @@ class Home extends Component {
             <Tab label="UnAnswered" {...a11yProps(0)} />
             <Tab label="Answered" {...a11yProps(1)} />
           </Tabs>
+
           <SimpleTabPanel value={this.state.value} index={0}>
-            {this.props.questionsData.unAnswered.map((question) => (
-              <Question question={question} answered="false" />
-            ))}
+            <Grid direction="column" container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={2}>
+                  {this.props.questionsData.unAnswered.map((question) => (
+                    <Question question={question} answered="false" />
+                  ))}
+                </Grid>
+              </Grid>
+            </Grid>
           </SimpleTabPanel>
           <SimpleTabPanel value={this.state.value} index={1}>
-            {this.props.questionsData.answered.map((question) => (
-              <Question question={question} answered="true" />
-            ))}
+            <Grid direction="column" container spacing={2}>
+              <Grid item xs={12}>
+                <Grid container justify="center" spacing={2}>
+                  {this.props.questionsData.answered.map((question) => (
+                    <Question question={question} answered="true" />
+                  ))}
+                </Grid>
+              </Grid>
+            </Grid>
           </SimpleTabPanel>
         </Grid>
       </Grid>

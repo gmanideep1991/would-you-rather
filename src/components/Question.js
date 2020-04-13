@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
   root: {
@@ -27,36 +28,37 @@ const useStyles = makeStyles({
 export default function Question(props) {
   const { question, answered } = props;
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
-  console.log(props);
+
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardHeader title={question.author} />
-      <CardContent>
-        <Typography component="h6">Would you rather?</Typography>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {question.optionOne.text}
-        </Typography>
-        <Typography color="textSecondary" gutterBottom>
-          or
-        </Typography>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {question.optionTwo.text}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button size="small">
-          {answered === true ? "View results" : "Answer Question"}
-        </Button>
-      </CardActions>
-    </Card>
+    <Grid item xs={8}>
+      <Card className={classes.root} variant="outlined">
+        <CardHeader title={question.author} />
+        <CardContent>
+          <Typography component="h6">Would you rather?</Typography>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            {question.optionOne.text}
+          </Typography>
+          <Typography color="textSecondary" gutterBottom>
+            or
+          </Typography>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            {question.optionTwo.text}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">
+            {answered === "true" ? "View results" : "Answer Question"}
+          </Button>
+        </CardActions>
+      </Card>
+    </Grid>
   );
 }

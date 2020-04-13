@@ -31,7 +31,6 @@ class Login extends Component {
     this.props.dispatch(setAuthedUser(this.state.userId));
   };
   render() {
-    console.log(this.props);
     return (
       <div>
         <FormControl
