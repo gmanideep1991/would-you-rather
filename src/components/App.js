@@ -4,10 +4,12 @@ import { connect } from "react-redux";
 import { handleInitialData } from "../actions/common";
 import LoadingBar from "react-redux-loading-bar";
 import Navbar from "./Navbar";
-import Add from "./Add";
 import Home from "./Home";
 import LeaderBoard from "./LeaderBoard";
 import Login from "./Login";
+import NewQuestion from "./NewQuestion";
+import ViewQuestion from "./ViewQuestion";
+import Error from "./Error";
 
 class App extends Component {
   componentDidMount() {
@@ -24,10 +26,14 @@ class App extends Component {
             <LoadingBar />
             <div>
               <Route path="/" exact component={Home} />
-              <Route path="/add" exact component={Add} />
+              <Route path="/add" exact component={NewQuestion} />
               <Route path="/leaderboard" exact component={LeaderBoard} />
-              {/* <Route path="/tweet/:id" component={TweetPage} />
-              <Route path="/new" component={NewTweet} /> */}
+              <Route
+                path="/question/:questionId"
+                exact
+                component={ViewQuestion}
+              />
+              <Route path="/error" exact component={Error} />
             </div>
           </Fragment>
         )}

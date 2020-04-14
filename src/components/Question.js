@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import Grid from "@material-ui/core/Grid";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -54,7 +55,7 @@ export default function Question(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">
+          <Button component={Link} size="small" to={`/question/${question.id}`}>
             {answered === "true" ? "View results" : "Answer Question"}
           </Button>
         </CardActions>

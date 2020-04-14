@@ -27,6 +27,7 @@ class Home extends Component {
       value: newValue,
     });
   };
+
   render() {
     return (
       <Grid container spacing={3}>
@@ -47,7 +48,11 @@ class Home extends Component {
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={2}>
                   {this.props.questionsData.unAnswered.map((question) => (
-                    <Question question={question} answered="false" />
+                    <Question
+                      key={question.id}
+                      question={question}
+                      answered="false"
+                    />
                   ))}
                 </Grid>
               </Grid>
@@ -58,7 +63,11 @@ class Home extends Component {
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={2}>
                   {this.props.questionsData.answered.map((question) => (
-                    <Question question={question} answered="true" />
+                    <Question
+                      key={question.id}
+                      question={question}
+                      answered="true"
+                    />
                   ))}
                 </Grid>
               </Grid>

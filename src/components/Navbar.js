@@ -25,7 +25,8 @@ const useStyles = (theme) => ({
     textAlign: "right",
   },
   button: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 });
 
