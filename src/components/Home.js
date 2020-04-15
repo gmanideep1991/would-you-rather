@@ -47,6 +47,8 @@ class Home extends Component {
             <Grid direction="column" container spacing={2}>
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={2}>
+                  {this.props.questionsData.unAnswered.length === 0 &&
+                    "All questions are answered"}
                   {this.props.questionsData.unAnswered.map((question) => (
                     <Question
                       key={question.id}
@@ -62,6 +64,8 @@ class Home extends Component {
             <Grid direction="column" container spacing={2}>
               <Grid item xs={12}>
                 <Grid container justify="center" spacing={2}>
+                  {this.props.questionsData.answered.length === 0 &&
+                    "No answered questions to view results"}
                   {this.props.questionsData.answered.map((question) => (
                     <Question
                       key={question.id}

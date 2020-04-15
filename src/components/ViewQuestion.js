@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import Result from "./Result";
 import Poll from "./Poll";
 import { Redirect } from "react-router-dom";
+import { handleSaveQuestionAnswer } from "../actions/users";
 
 class ViewQuestion extends Component {
+  submitPoll = (user, qid, optionValue) => {
+    this.props.dispatch(handleSaveQuestionAnswer(user, qid, optionValue));
+  };
   render() {
     if (this.props.isValidId) {
       if (this.props.isQuestionAnswered) {
@@ -16,7 +20,14 @@ class ViewQuestion extends Component {
           />
         );
       }
-      return <Poll author={this.props.author} question={this.props.question} />;
+      return (
+        <Poll
+          author={this.props.author}
+          question={this.props.question}
+          authedUser={this.props.authedUser}
+          submitPoll={this.submitPoll}
+        />
+      );
     }
     return <Redirect to="/error" />;
   }
@@ -30,7 +41,7 @@ function mapStateToProps({ authedUser, users, questions }, { match }) {
   let isValidId = false;
   if (question !== undefined) {
     isValidId = true;
-    author = users[authedUser];
+    author = users[question.author];
     isQuestionAnswered =
       question.optionOne.votes.includes(authedUser) ||
       question.optionTwo.votes.includes(authedUser);
@@ -42,6 +53,7 @@ function mapStateToProps({ authedUser, users, questions }, { match }) {
     userVote,
     author,
     question,
+    authedUser,
   };
 }
 

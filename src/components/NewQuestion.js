@@ -9,6 +9,8 @@ import { withStyles } from "@material-ui/core";
 import CardHeader from "@material-ui/core/CardHeader";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
+import { handleSaveQuestion } from "../actions/questions";
+import { Redirect } from "react-router-dom";
 
 const useStyles = (theme) => ({
   root: {
@@ -29,6 +31,7 @@ const useStyles = (theme) => ({
 });
 class NewQuestion extends Component {
   state = {
+    validSubmit: false,
     optionOne: "",
     optionTwo: "",
   };
@@ -37,19 +40,36 @@ class NewQuestion extends Component {
   };
   addQuestion = (e) => {
     e.preventDefault();
-    const question = {
-      author: this.props.author,
-      optionone: this.state.optionOne,
-      optiontwo: this.state.optionTwo,
-    };
-    console.log(question);
+    this.props.dispatch(
+      handleSaveQuestion(
+        this.state.optionOne,
+        this.state.optionTwo,
+        this.props.author,
+        () => {
+          this.setState({
+            validSubmit: true,
+            optionOne: "",
+            optionTwo: "",
+          });
+        }
+      )
+    );
   };
   render() {
     const { classes } = this.props;
+    if (this.state.validSubmit) {
+      return <Redirect to="/"></Redirect>;
+    }
     return (
       <Container maxWidth="sm">
         <Card className={classes.root} variant="outlined">
-          <CardHeader title="Create a new question:" />
+          <CardHeader
+            title={
+              this.state.validSubmit
+                ? "what to do next ?"
+                : "Create a new question"
+            }
+          />
           <CardContent>
             <Typography component="h6">Would you rather?</Typography>
           </CardContent>

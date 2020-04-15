@@ -7,6 +7,10 @@ import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { setAuthedUser } from "../actions/authedUser";
 import { Link } from "react-router-dom";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Container from "@material-ui/core/Container";
 
 const useStyles = (theme) => ({
   formControl: {
@@ -32,45 +36,54 @@ class Login extends Component {
   };
   render() {
     return (
-      <div>
-        <FormControl
-          variant="outlined"
-          className={this.props.classes.formControl}
-        >
-          <InputLabel htmlFor="outlined-user-native-simple">user</InputLabel>
+      <Container maxWidth="sm">
+        <Card>
+          <CardHeader title="Login" />
+          <CardContent style={{ textAlign: "center" }}>
+            <FormControl
+              variant="outlined"
+              className={this.props.classes.formControl}
+            >
+              <InputLabel htmlFor="outlined-user-native-simple">
+                user
+              </InputLabel>
 
-          <Select
-            native
-            value={this.state.userId}
-            onChange={this.handleChange}
-            label="User"
-            inputProps={{
-              name: "user",
-              id: "outlined-user-native-simple",
-            }}
-          >
-            <option hidden value="default">
-              Select a user...
-            </option>
-            {this.props.users.map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.name}
-              </option>
-            ))}
-          </Select>
-          <Button
-            component={Link}
-            variant="contained"
-            color="primary"
-            onClick={this.handleSubmit}
-            to={
-              this.props.location === undefined ? "/" : this.props.location.from
-            }
-          >
-            Submit
-          </Button>
-        </FormControl>
-      </div>
+              <Select
+                native
+                value={this.state.userId}
+                onChange={this.handleChange}
+                label="User"
+                inputProps={{
+                  name: "user",
+                  id: "outlined-user-native-simple",
+                }}
+              >
+                <option hidden value="default">
+                  Select a user...
+                </option>
+                {this.props.users.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.name}
+                  </option>
+                ))}
+              </Select>
+              <Button
+                component={Link}
+                variant="contained"
+                color="primary"
+                onClick={this.handleSubmit}
+                to={
+                  this.props.location === undefined
+                    ? "/"
+                    : this.props.location.from
+                }
+              >
+                Submit
+              </Button>
+            </FormControl>
+          </CardContent>
+        </Card>
+      </Container>
     );
   }
 }
